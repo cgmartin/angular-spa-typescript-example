@@ -1,6 +1,5 @@
 .tmp
 coverage
 dist
-typings
 node_modules
 bower_components
