@@ -16,7 +16,7 @@ describe('app module', () => {
     var bootConfigRequestHandler;
 
     beforeEach(() => {
-        appInstance = new app.App([]);
+        appInstance = new app.App();
     });
 
     beforeEach(inject(($injector) => {

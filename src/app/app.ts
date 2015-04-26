@@ -1,19 +1,29 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 
 import appConfig = require('./app-config');
+import appRouter = require('./app-router');
+import todo = require('./todo/todo-module');
+
+var todoModule = new todo.TodoModule();
 
 export class App {
     private name: string;
     public module: angular.IModule;
 
     constructor(
-        dependencies: Array<string>,
         name?: string
     ) {
         if (!name) { name = 'app'; }
 
         this.name = name;
-        this.module = angular.module(name, dependencies);
+        this.module = angular.module(name, [
+                'app.templates',
+                'ui.router',
+                todoModule.getName()
+            ])
+            .config(appConfig.compileConfig)
+            .config(appConfig.locationConfig)
+            .config(appRouter.routerConfig);
     }
 
     public getName(): string {
