@@ -2,6 +2,7 @@
   "name": "spa-ts-client",
   "version": "0.0.1",
   "description": "Example SPA Client using TypeScript",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "postinstall": "bower install && tsd update",
