@@ -13,6 +13,7 @@
   "author": "Christopher Martin <cgmartin@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "bower": "^1.4.1",
     "browser-sync": "^2.6.4",
     "browserify": "^9.0.8",
     "chai": "^2.2.0",
