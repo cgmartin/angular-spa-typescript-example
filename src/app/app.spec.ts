@@ -10,8 +10,13 @@ var inject = angular.mock.inject;
 import app = require('./app');
 
 describe('app module', () => {
+    var appInstance;
     var $httpBackend;
     var bootConfigRequestHandler;
+
+    beforeEach(() => {
+        appInstance = new app.App();
+    });
 
     beforeEach(inject(($injector) => {
         // Set up the mock http service responses
@@ -38,11 +43,11 @@ describe('app module', () => {
         var documentClone = <Document>document.cloneNode(true);
 
         $httpBackend.expectGET('/spa-boot.json');
-        app.bootstrap(false, documentClone, $injector);
+        appInstance.bootstrap(false, documentClone, $injector);
         $httpBackend.flush();
 
         var appModule = angular.module('app');
         expect(appModule).to.be.an('object');
-        expect(app.module).to.eql(appModule);
+        expect(appInstance.module).to.eql(appModule);
     }));
 });

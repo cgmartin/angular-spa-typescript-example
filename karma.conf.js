@@ -20,7 +20,7 @@ module.exports = function karmaConfig(config) {
         // list of files / patterns to load in the browser
         files: [].concat(
             bowerFiles,
-            ['src/main.ts', 'src/app/**/*.partial.html', 'src/**/*.spec.ts']
+            ['src/**/*.ts', 'src/app/**/*.partial.html', '!src/main.ts']
         ),
 
         // list of files to exclude
