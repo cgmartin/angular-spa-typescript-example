@@ -1,5 +1,9 @@
 # angular-spa-typescript-example
 
+[![Build Status](https://travis-ci.org/cgmartin/angular-spa-typescript-example.svg?branch=master)](https://travis-ci.org/cgmartin/angular-spa-typescript-example)
+[![Dependency Status](https://david-dm.org/cgmartin/angular-spa-typescript-example.svg)](https://david-dm.org/cgmartin/angular-spa-typescript-example)
+[![devDependency Status](https://david-dm.org/cgmartin/angular-spa-typescript-example/dev-status.svg)](https://david-dm.org/cgmartin/angular-spa-typescript-example#info=devDependencies)
+
 ## Synopsis
 
 Demonstrates using TypeScript in a client-side Angular single page application with Mocha unit tests and Gulp tasks.
