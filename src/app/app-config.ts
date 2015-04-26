@@ -2,7 +2,7 @@
 
 /**
  * Application configuration added to angular via a dynamic constant at boot time
- * @see app.ts : bootstrapApp()
+ * @see App::bootstrapApp()
  */
 export interface IBootConfig {
     debugInfoEnabled?: boolean;

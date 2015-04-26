@@ -20,11 +20,11 @@ module.exports = function karmaConfig(config) {
         // list of files / patterns to load in the browser
         files: [].concat(
             bowerFiles,
-            ['src/**/*.ts', 'src/app/**/*.partial.html', '!src/main.ts']
+            ['src/**/*.ts', 'src/app/**/*.partial.html']
         ),
 
         // list of files to exclude
-        exclude: [],
+        exclude: ['src/main.ts'],
 
         // preprocess matching files before serving them to the browser
         // info: http://karma-runner.github.io/0.10/config/preprocessors.html
