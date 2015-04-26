@@ -5,7 +5,7 @@
 import chai = require('chai');
 var expect = chai.expect;
 
-import appConfig = require('./app-config');
+import appConfig = require('../../src/app/app-config');
 
 describe('app-config module', () => {
     it('should export', () => {

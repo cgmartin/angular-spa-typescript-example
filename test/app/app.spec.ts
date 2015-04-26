@@ -7,7 +7,7 @@ import chai = require('chai');
 var expect = chai.expect;
 var module = angular.mock.module;
 var inject = angular.mock.inject;
-import app = require('./app');
+import app = require('../../src/app/app');
 
 describe('app module', () => {
     var appInstance;

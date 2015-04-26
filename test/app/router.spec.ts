@@ -5,7 +5,7 @@
 import chai = require('chai');
 var expect = chai.expect;
 
-import router = require('./router');
+import router = require('../../src/app/router');
 
 describe('router module', () => {
     it('should export', () => {

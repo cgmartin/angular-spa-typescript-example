@@ -4,7 +4,7 @@
 import chai = require('chai');
 var expect = chai.expect;
 
-import validation = require('./validation');
+import validation = require('../../src/lib/validation');
 
 describe('validation', () => {
 
