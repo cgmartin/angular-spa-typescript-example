@@ -7,7 +7,7 @@ Demonstrates using TypeScript in a client-side Angular single page application w
 **Caution:** This is an experimental playground that I'm using to learn Gulp and TypeScript. Use at your own risk.
 If you run across anything here that could be done better, I'd love the feedback.
 
-This client project is meant to accompany set of Node.js microservices (REST webservice, Chat Server, Static Server, Reverse Proxy),
+This client project is meant to accompany a set of Node.js microservices (REST webservice, Chat Server, Static Server, Reverse Proxy),
 and is designed with portability in mind (see [Twelve Factors](http://12factor.net/)).
 
 Application configuration is separated from the application by an initial `/spa-boot.json` request, which can be
@@ -19,6 +19,8 @@ deployed as a file or routed to a backing service (depending on environment).
 1. Install Gulp/Bower/TSD/Karma: `npm -g i gulp bower tsd@next karma`
 1. Clone this repo
 1. Install dependencies: `npm i`
+1. Start the app in dev mode: `npm start`
+1. Point browser to <http://localhost:3000/>
 
 After installation, the following actions are available:
 
@@ -26,9 +28,9 @@ After installation, the following actions are available:
 * `npm test` : Runs unit tests once.
 * `karma start` : Runs unit tests continuously, watching for changes.
 * `npm run lint` : Lints TypeScript files (see `tslint.json` for settings).
-* `npm run build` : Builds a production distribution under the `dist/` folder, for deployment to static server or CDN.
+* `npm run build` : Builds a production distribution under the `dist/` folder, for deployment to a static webserver or CDN.
 
-## Libraries/Tools In Use
+## Libraries & Tools
 
 The functionality has been implemented by integrating the following 3rd-party tools and libraries:
 
