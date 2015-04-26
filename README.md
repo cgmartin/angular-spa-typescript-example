@@ -25,9 +25,8 @@ deployed as a file or routed to a backing service (depending on environment).
 After installation, the following actions are available:
 
 * `npm start` : Builds for development, runs a local webserver, and watches for changes.
-* `npm test` : Runs unit tests once.
+* `npm test` : Runs TypeScript file linting and unit tests once.
 * `karma start` : Runs unit tests continuously, watching for changes.
-* `npm run lint` : Lints TypeScript files (see `tslint.json` for settings).
 * `npm run build` : Builds a production distribution under the `dist/` folder, for deployment to a static webserver or CDN.
 
 ## Libraries & Tools

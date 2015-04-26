@@ -8,8 +8,7 @@
     "postinstall": "bower install && tsd update",
     "build": "gulp build --prod",
     "start": "gulp watch",
-    "test": "node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "lint": "gulp lint"
+    "test": "gulp lint && node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
   },
   "author": "Christopher Martin <cgmartin@gmail.com>",
   "license": "MIT",
