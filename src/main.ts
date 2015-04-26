@@ -1,4 +1,4 @@
 import app = require('./app/app');
-import Validation = require('./lib/Validation');
+import validation = require('./lib/validation');
 
 window['app'] = app;
