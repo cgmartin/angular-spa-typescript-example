@@ -9,7 +9,7 @@ var module = angular.mock.module;
 var inject = angular.mock.inject;
 import app = require('./app');
 
-describe('app', () => {
+describe('app module', () => {
     var $httpBackend;
     var bootConfigRequestHandler;
 
@@ -21,6 +21,7 @@ describe('app', () => {
             .when('GET', '/spa-boot.json')
             .respond({
                 debugInfoEnabled: true,
+                html5Mode: false,
                 apiBaseUrl: '/api/'
             });
     }));
@@ -30,10 +31,16 @@ describe('app', () => {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('module should bootstrap', inject(($injector) => {
+    it('should bootstrap', inject(($injector) => {
+        // Clone document in case we want to bootstrap again.
+        // Bootstrap is not designed to "unbootstrap", must destroy
+        // DOM element to achieve this.
+        var documentClone = <Document>document.cloneNode(true);
+
         $httpBackend.expectGET('/spa-boot.json');
-        app.bootstrap(false, $injector);
+        app.bootstrap(false, documentClone, $injector);
         $httpBackend.flush();
+
         var appModule = angular.module('app');
         expect(appModule).to.be.an('object');
         expect(app.module).to.eql(appModule);
