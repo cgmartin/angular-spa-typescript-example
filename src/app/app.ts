@@ -1,29 +1,23 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 
 import appConfig = require('./app-config');
-import router = require('./router');
 
 export class App {
     private name: string;
     public module: angular.IModule;
 
     constructor(
-        compileConfig?: any,
-        locationConfig?: any,
-        routerConfig?: any,
+        dependencies: Array<string>,
         name?: string
     ) {
         if (!name) { name = 'app'; }
 
         this.name = name;
-        this.module = angular
-            .module(name, [
-                'app.templates',
-                'ui.router'
-            ])
-            .config(compileConfig || appConfig.compileConfig)
-            .config(locationConfig || appConfig.locationConfig)
-            .config(routerConfig || router.routerConfig);
+        this.module = angular.module(name, dependencies);
+    }
+
+    public getName(): string {
+        return this.name;
     }
 
     /**

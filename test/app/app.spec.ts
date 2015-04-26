@@ -7,7 +7,6 @@
 import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
-var module = angular.mock.module;
 var inject = angular.mock.inject;
 import app = require('../../src/app/app');
 
@@ -15,15 +14,9 @@ describe('app module', () => {
     var appInstance;
     var $httpBackend;
     var bootConfigRequestHandler;
-    var compileConfig;
-    var locationConfig;
-    var routerConfig;
 
     beforeEach(() => {
-        compileConfig = sinon.spy();
-        locationConfig = sinon.spy();
-        routerConfig = sinon.spy();
-        appInstance = new app.App(compileConfig, locationConfig, routerConfig);
+        appInstance = new app.App([]);
     });
 
     beforeEach(inject(($injector) => {
@@ -42,6 +35,10 @@ describe('app module', () => {
     afterEach(function() {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('should create default name', () => {
+        expect(appInstance.getName()).to.eql('app');
     });
 
     it('should bootstrap', inject(($injector) => {

@@ -47,6 +47,7 @@ The functionality has been implemented by integrating the following 3rd-party to
  - [Node.js](http://nodejs.org/api/): JavaScript runtime environment for server-side development
  - [Karma](http://karma-runner.github.io/): Spectacular Test Runner for Javascript
  - [Mocha](http://mochajs.org/): The fun, simple, flexible JavaScript test framework
+ - [Sinon](http://sinonjs.org/): Standalone test spies, stubs and mocks for JavaScript
 
 ## License
 

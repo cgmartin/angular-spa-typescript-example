@@ -1,4 +1,15 @@
-// Bootstrap and run the app
+// Compose the application and bootstrap
 import app = require('./app/app');
-var myApp = new app.App();
+import appConfig = require('./app/app-config');
+import router = require('./app/router');
+
+var myApp = new app.App([
+    'app.templates',
+    'ui.router'
+]);
+myApp.module
+    .config(appConfig.compileConfig)
+    .config(appConfig.locationConfig)
+    .config(router.routerConfig);
+
 myApp.bootstrap(true);
