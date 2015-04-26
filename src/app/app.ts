@@ -7,7 +7,12 @@ export class App {
     private name: string;
     public module: angular.IModule;
 
-    constructor(name?: string) {
+    constructor(
+        compileConfig?: any,
+        locationConfig?: any,
+        routerConfig?: any,
+        name?: string
+    ) {
         if (!name) { name = 'app'; }
 
         this.name = name;
@@ -16,9 +21,9 @@ export class App {
                 'app.templates',
                 'ui.router'
             ])
-            .config(appConfig.compileConfig)
-            .config(appConfig.locationConfig)
-            .config(router.routerConfig);
+            .config(compileConfig || appConfig.compileConfig)
+            .config(locationConfig || appConfig.locationConfig)
+            .config(routerConfig || router.routerConfig);
     }
 
     /**
@@ -30,7 +35,7 @@ export class App {
         strictDi: boolean,
         domElement?: Document,
         injector?: angular.auto.IInjectorService
-    ) {
+    ): angular.IHttpPromise<any> {
         if (!injector) { injector = angular.injector(['ng']); }
 
         var $http = injector.get('$http');

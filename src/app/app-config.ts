@@ -16,12 +16,16 @@ export function compileConfig(
 ) {
     // Enable/disable debug data
     // https://docs.angularjs.org/guide/production
-    $compileProvider.debugInfoEnabled(config.debugInfoEnabled || true);
+    $compileProvider.debugInfoEnabled(
+        (config.debugInfoEnabled !== undefined) ? config.debugInfoEnabled : true
+    );
 }
 
 // @ngInject
 export function locationConfig(
     $locationProvider: angular.ILocationProvider, config: IBootConfig
 ) {
-    $locationProvider.html5Mode(config.html5Mode || false);
+    $locationProvider.html5Mode(
+        (config.html5Mode !== undefined) ? config.html5Mode : false
+    );
 }

@@ -2,7 +2,9 @@
 /// <reference path="../../typings/angularjs/angular.d.ts"/>
 /// <reference path="../../typings/angularjs/angular-mocks.d.ts"/>
 /// <reference path="../../typings/chai/chai.d.ts"/>
+/// <reference path="../../typings/sinon/sinon.d.ts"/>
 
+import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
 var module = angular.mock.module;
@@ -13,9 +15,15 @@ describe('app module', () => {
     var appInstance;
     var $httpBackend;
     var bootConfigRequestHandler;
+    var compileConfig;
+    var locationConfig;
+    var routerConfig;
 
     beforeEach(() => {
-        appInstance = new app.App();
+        compileConfig = sinon.spy();
+        locationConfig = sinon.spy();
+        routerConfig = sinon.spy();
+        appInstance = new app.App(compileConfig, locationConfig, routerConfig);
     });
 
     beforeEach(inject(($injector) => {
