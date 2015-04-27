@@ -15,7 +15,7 @@ module.exports = function karmaConfig(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['mocha', 'chai', 'sinon', 'browserify'],
+        frameworks: ['mocha', 'chai', 'sinon'/*, 'browserify'*/],
 
         // list of files / patterns to load in the browser
         files: [].concat(
@@ -30,8 +30,8 @@ module.exports = function karmaConfig(config) {
         // info: http://karma-runner.github.io/0.10/config/preprocessors.html
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            '**/*.ts': ['browserify'],
-            //'**/*.ts': ['typescript'],
+            //'**/*.ts': ['browserify'],
+            '**/*.ts': ['typescript'],
             //'src/**/*.ts': ['coverage'],
             '**/*.partial.html': ['ng-html2js']
         },
@@ -45,29 +45,26 @@ module.exports = function karmaConfig(config) {
             moduleName: 'app.templates'
         },
 
-        browserify: {
-            debug: false, // NOTE: Enabling this can cause crashes: https://github.com/karma-runner/karma/pull/1098
-            plugin: [[tsify, {target: 'ES5'}]]
-        },
-
-        // For server-side Node.js TypeScript development, this preprocessor
-        // might work out better than browserify. For client-side development,
-        // it was too much of a fight...
-        //typescriptPreprocessor: {
-        //    // options passed to the typescript compiler
-        //    options: {
-        //        sourceMap: false, // (optional) Generates corresponding .map file.
-        //        target: 'ES5', // (optional) Specify ECMAScript target version: 'ES3' (default), or 'ES5'
-        //        //module: 'commonjs', // (optional) Specify module code generation: 'commonjs' or 'amd'
-        //        noImplicitAny: false, // (optional) Warn on expressions and declarations with an implied 'any' type.
-        //        noResolve: true, // (optional) Skip resolution and preprocessing.
-        //        removeComments: true // (optional) Do not emit comments to output.
-        //    },
-        //    // transforming the filenames
-        //    transformPath: function(path) {
-        //        return path.replace(/\.ts$/, '.js');
-        //    }
+        //browserify: {
+        //    debug: false, // NOTE: Enabling this can cause crashes: https://github.com/karma-runner/karma/pull/1098
+        //    plugin: [[tsify, {target: 'ES5'}]]
         //},
+
+        typescriptPreprocessor: {
+            // options passed to the typescript compiler
+            options: {
+                sourceMap: false, // (optional) Generates corresponding .map file.
+                target: 'ES5', // (optional) Specify ECMAScript target version: 'ES3' (default), or 'ES5'
+                module: 'commonjs', // (optional) Specify module code generation: 'commonjs' or 'amd'
+                noImplicitAny: false, // (optional) Warn on expressions and declarations with an implied 'any' type.
+                noResolve: false, // (optional) Skip resolution and preprocessing.
+                removeComments: true // (optional) Do not emit comments to output.
+            },
+            // transforming the filenames
+            transformPath: function(path) {
+                return path.replace(/\.ts$/, '.js');
+            }
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

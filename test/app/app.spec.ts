@@ -3,12 +3,13 @@
 /// <reference path="../../typings/angularjs/angular-mocks.d.ts"/>
 /// <reference path="../../typings/chai/chai.d.ts"/>
 /// <reference path="../../typings/sinon/sinon.d.ts"/>
+/// <reference path="../../src/app/app.ts"/>
 
-import sinon = require('sinon');
-import chai = require('chai');
+//import sinon = require('sinon');
+//import chai = require('chai');
 var expect = chai.expect;
-var inject = angular.mock.inject;
-import app = require('../../src/app/app');
+//var inject = ng.mock.inject;
+//import app = require('../../src/app/app');
 
 describe('app module', () => {
     var appInstance;

@@ -3,16 +3,17 @@
 /// <reference path="../../typings/angular-ui-router/angular-ui-router.d.ts" />
 /// <reference path="../../typings/chai/chai.d.ts"/>
 /// <reference path="../../typings/sinon/sinon.d.ts"/>
+/// <reference path="../../src/app/app-router.ts"/>
 
-import sinon = require('sinon');
-import chai = require('chai');
+//import sinon = require('sinon');
+//import chai = require('chai');
 var expect = chai.expect;
 
-import router = require('../../src/app/app-router');
+//import router = require('../../src/app/app-router');
 
 describe('router module', () => {
     it('should export', () => {
-        expect(router.routerConfig).to.be.a('function');
+        expect(app.routerConfig).to.be.a('function');
     });
 
     it('should configure stateProvider', () => {
@@ -23,7 +24,7 @@ describe('router module', () => {
         var urlRouterProvider = {
             otherwise: sinon.spy()
         };
-        router.routerConfig(
+        app.routerConfig(
             <angular.ui.IStateProvider><any>stateProvider,
             <angular.ui.IUrlRouterProvider><any>urlRouterProvider
         );

@@ -66,84 +66,79 @@ gulp.task('vendor-js', false, function() {
 // browserify/watchify example
 //
 
-gulp.task('app-js', false, function() {
-    return addJsProcessing(
-        browserify({debug: true})
-            .require('./src/main.ts', {entry: true})
-            .plugin(tsify, {target: 'ES5'})
-            .bundle()
-    );
-});
-
-function addJsProcessing(stream) {
-    var destDir  = 'dist/js';
-    var destFile = 'main.js';
-    return stream
-        .on('error', onError.bind(gulp))
-        .pipe(source(destFile))
-        .pipe(buffer())
-        .pipe(verbosePrintFiles('app-js'))
-        .pipe($.if(isProduction, $.sourcemaps.init({loadMaps: true})))
-        .pipe($.ngAnnotate({'single_quotes': true}))
-        .pipe($.if(isProduction, $.uglify()))
-        .pipe($.if(isProduction, $.sourcemaps.write('.')))
-        .pipe(gulp.dest(destDir))
-        .pipe(browserSync.reload({stream:true}));
-}
-
-function bundleTs() {
-    tsWatchifyBundler = tsWatchifyBundler || watchify(
-            browserify('./src/main.ts', {
-                entry: true,
-                cache: {},
-                packageCache: {},
-                fullPaths: true,
-                debug: true
-            }).plugin(tsify, {target: 'ES5'})
-        )
-        .on('update', bundleTs)
-        .on('log', (isVerbose) ? $.util.log : $.util.noop);
-
-    return addJsProcessing(tsWatchifyBundler.bundle());
-}
+//gulp.task('app-js', false, function() {
+//    return addJsProcessing(
+//        browserify({debug: true})
+//            .require('./src/main.ts', {entry: true})
+//            .plugin(tsify, {target: 'ES5'})
+//            .bundle()
+//    );
+//});
+//
+//function addJsProcessing(stream) {
+//    var destDir  = 'dist/js';
+//    var destFile = 'main.js';
+//    return stream
+//        .on('error', onError.bind(gulp))
+//        .pipe(source(destFile))
+//        .pipe(buffer())
+//        .pipe(verbosePrintFiles('app-js'))
+//        .pipe($.if(isProduction, $.sourcemaps.init({loadMaps: true})))
+//        .pipe($.ngAnnotate({'single_quotes': true}))
+//        .pipe($.if(isProduction, $.uglify()))
+//        .pipe($.if(isProduction, $.sourcemaps.write('.')))
+//        .pipe(gulp.dest(destDir))
+//        .pipe(browserSync.reload({stream:true}));
+//}
+//
+//function bundleTs() {
+//    tsWatchifyBundler = tsWatchifyBundler || watchify(
+//            browserify('./src/main.ts', {
+//                entry: true,
+//                cache: {},
+//                packageCache: {},
+//                fullPaths: true,
+//                debug: true
+//            }).plugin(tsify, {target: 'ES5'})
+//        )
+//        .on('update', bundleTs)
+//        .on('log', (isVerbose) ? $.util.log : $.util.noop);
+//
+//    return addJsProcessing(tsWatchifyBundler.bundle());
+//}
 
 //
 // gulp-typescript example
 //
-// For server-side Node.js TypeScript development, gulp-typescript
-// might work out better than browserify. For client-side development,
-// it was too much of a fight...
 
-//var tsProject = $.typescript.createProject({
-//    declarationFiles: false,
-//    noExternalResolve: true,
-//    sortOutput: true,
-//    target: 'ES5',
-//    // module: null,       // Client-side Internal module references
-//    // module: 'amd',      // Client-side RequireJS
-//    // module: 'commonjs', // Server-side Node
-//    sourceRoot: '../../src'
-//});
-//
-//gulp.task('app-js', false, function() {
-//    var tsResult = gulp.src(['src/**/*.ts', 'typings/**/*.ts'])
-//        .pipe(verbosePrintFiles('app-js'))
-//        .pipe($.if(isProduction, $.sourcemaps.init()))
-//        .pipe($.typescript(tsProject));
-//
-//    // Merge the two output streams, finishes when the IO of both operations are done.
-//    return merge([
-//        tsResult.dts
-//            .pipe(gulp.dest('dist/defs')),
-//        tsResult.js
-//            .pipe($.concat('main.js'))
-//            .pipe($.ngAnnotate({'single_quotes': true}))
-//            .pipe($.if(isProduction, $.uglify()))
-//            .pipe($.if(isProduction, $.stripDebug()))
-//            .pipe($.if(isProduction, $.sourcemaps.write('.')))
-//            .pipe(gulp.dest('dist/js'))
-//    ]);
-//});
+var tsProject = $.typescript.createProject({
+    declarationFiles: false,
+    noExternalResolve: true,
+    sortOutput: true,
+    target: 'ES5',
+    module: 'commonjs',
+    sourceRoot: '../../src'
+});
+
+gulp.task('app-js', false, function() {
+    var tsResult = gulp.src(['src/**/*.ts', 'typings/**/*.ts'])
+        .pipe(verbosePrintFiles('app-js'))
+        .pipe($.if(isProduction, $.sourcemaps.init()))
+        .pipe($.typescript(tsProject));
+
+    // Merge the two output streams, finishes when the IO of both operations are done.
+    return merge([
+        tsResult.dts
+            .pipe(gulp.dest('dist/defs')),
+        tsResult.js
+            .pipe($.concat('main.js'))
+            .pipe($.ngAnnotate({'single_quotes': true}))
+            .pipe($.if(isProduction, $.uglify()))
+            .pipe($.if(isProduction, $.stripDebug()))
+            .pipe($.if(isProduction, $.sourcemaps.write('.')))
+            .pipe(gulp.dest('dist/js'))
+    ]);
+});
 
 /************************************************************************
  * LESS (and other assets) tasks
@@ -164,7 +159,7 @@ var mainCssFiles = [{
 //gulp.task('lint-less', function() {
 //    return gulp.src('src/styles/**/*.less')
 //        .pipe($.plumber({errorHandler: onError}))
-//        .pipe(verbosePrintFiles('lint-js'))
+//        .pipe(verbosePrintFiles('lint-less'))
 //        .pipe($.recess({includePath: _(mainCssFiles).pluck('searchPaths').flatten().uniq().value()}))
 //        .pipe($.recess.reporter());
 //});
@@ -261,7 +256,11 @@ gulp.task('lint', 'Lints all TypeScript files', function(cb) {
 });
 
 gulp.task('build', 'Builds the source files into a distributable package', function(cb) {
-    runSequence('clean-build', 'build-iterate', cb);
+    runSequence(
+        'clean-build',
+        ['vendor-js', 'app-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'],
+        cb
+    );
 }, {
     options: {
         'prod':    'Enable production minification, sourcemaps, etc.',
@@ -269,11 +268,7 @@ gulp.task('build', 'Builds the source files into a distributable package', funct
     }
 });
 
-gulp.task('build-iterate', false, function(cb) {
-    runSequence(['vendor-js', 'app-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
-});
-
-gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['build-watch'], function() {
+gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['build'], function() {
     isWatching = true;
 
     var port = 8000;
@@ -304,12 +299,12 @@ gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['b
         open: false
     });
 
-    gulp.watch('src/**/*.ts',           ['lint-js']);
+    gulp.watch('src/**/*.ts',           ['lint-js', 'app-js']);
     gulp.watch('src/index.html',        ['index-html']);
     gulp.watch('src/**/*.partial.html', ['partials']);
     gulp.watch('src/styles/**/*.less',  ['less']);
 
-    return bundleTs();
+    //return bundleTs();
 }, {
     options: {
         'prod': 'Enable production minification, sourcemaps, etc.'
@@ -317,9 +312,9 @@ gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['b
 });
 
 // Don't run app-js during watch, handled by watchify
-gulp.task('build-watch', false, ['clean-build'], function(cb) {
-    runSequence(['vendor-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
-});
+//gulp.task('build-watch', false, ['clean-build'], function(cb) {
+//    runSequence(['vendor-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
+//});
 
 /************************************************************************
  * Functions/Utilities

@@ -2,17 +2,18 @@
 /// <reference path="../../typings/angularjs/angular.d.ts"/>
 /// <reference path="../../typings/chai/chai.d.ts"/>
 /// <reference path="../../typings/sinon/sinon.d.ts"/>
+/// <reference path="../../src/app/app-config.ts"/>
 
-import sinon = require('sinon');
-import chai = require('chai');
+//import sinon = require('sinon');
+//import chai = require('chai');
 var expect = chai.expect;
 
-import appConfig = require('../../src/app/app-config');
+//import appConfig = require('../../src/app/app-config');
 
 describe('app-config module', () => {
     it('should export', () => {
-        expect(appConfig.compileConfig).to.be.a('function');
-        expect(appConfig.locationConfig).to.be.a('function');
+        expect(app.compileConfig).to.be.a('function');
+        expect(app.locationConfig).to.be.a('function');
     });
 
     it('should configure compileProvider', () => {
@@ -24,11 +25,11 @@ describe('app-config module', () => {
             expected: {debugInfoEnabledCalledWith: true}
         }]
         .forEach((testData) => {
-            var bootConfig:appConfig.IBootConfig = testData.bootConfig;
+            var bootConfig: app.IBootConfig = testData.bootConfig;
             var compileProvider = {
                 debugInfoEnabled: sinon.spy()
             };
-            appConfig.compileConfig(<angular.ICompileProvider><any>compileProvider, bootConfig);
+            app.compileConfig(<angular.ICompileProvider><any>compileProvider, bootConfig);
             expect(compileProvider.debugInfoEnabled.called).to.be.true;
             expect(compileProvider.debugInfoEnabled.getCall(0)
                 .calledWith(testData.expected.debugInfoEnabledCalledWith)).to.be.true;
@@ -44,11 +45,11 @@ describe('app-config module', () => {
             expected: {html5ModeCalledWith: false}
         }]
         .forEach((testData) => {
-            var bootConfig:appConfig.IBootConfig = testData.bootConfig;
+            var bootConfig:app.IBootConfig = testData.bootConfig;
             var locationProvider = {
                 html5Mode: sinon.spy()
             };
-            appConfig.locationConfig(<angular.ILocationProvider><any>locationProvider, bootConfig);
+            app.locationConfig(<angular.ILocationProvider><any>locationProvider, bootConfig);
             expect(locationProvider.html5Mode.called).to.be.true;
             expect(locationProvider.html5Mode.getCall(0)
                 .calledWith(testData.expected.html5ModeCalledWith)).to.be.true;

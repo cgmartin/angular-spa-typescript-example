@@ -1,10 +1,11 @@
 /// <reference path="../../typings/mocha/mocha.d.ts"/>
 /// <reference path="../../typings/chai/chai.d.ts"/>
+/// <reference path="../../src/lib/validation.ts"/>
 
-import chai = require('chai');
+//import chai = require('chai');
 var expect = chai.expect;
 
-import validation = require('../../src/lib/validation');
+//import validation = require('../../src/lib/validation');
 
 describe('validation', () => {
 
