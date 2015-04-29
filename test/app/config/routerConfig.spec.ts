@@ -8,7 +8,7 @@ import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
 
-import routerConfig = require('../../../src/appModule/config/routerConfig');
+import routerConfig = require('../../../src/app/config/routerConfig');
 
 describe('router module', () => {
     it('should export', () => {

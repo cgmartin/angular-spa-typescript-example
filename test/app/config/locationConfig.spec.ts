@@ -7,7 +7,7 @@ import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
 
-import locationConfig = require('../../../src/appModule/config/locationConfig');
+import locationConfig = require('../../../src/app/config/locationConfig');
 import IBootConfig = require('../../../src/lib/IBootConfig');
 
 describe('app/config', () => {

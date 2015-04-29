@@ -8,7 +8,7 @@ import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
 var inject = angular.mock.inject;
-import AppModule = require('../../src/appModule/AppModule');
+import AppModule = require('../../src/app/AppModule');
 
 describe('app module', () => {
     var appInstance;

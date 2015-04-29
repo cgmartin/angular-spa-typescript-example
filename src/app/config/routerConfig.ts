@@ -8,9 +8,9 @@ function routerConfig(
     $urlRouterProvider: angular.ui.IUrlRouterProvider
 ) {
     $stateProvider
-        .state('home',  new RouterState('/home',  'appModule/partials/home.partial.html'))
-        .state('login', new RouterState('/login', 'appModule/partials/login.partial.html'))
-        .state('chat',  new RouterState('/chat',  'appModule/partials/chat.partial.html'));
+        .state('home',  new RouterState('/home',  'app/partials/home.partial.html'))
+        .state('login', new RouterState('/login', 'app/partials/login.partial.html'))
+        .state('chat',  new RouterState('/chat',  'app/partials/chat.partial.html'));
 
     $urlRouterProvider.otherwise('/home');
 }

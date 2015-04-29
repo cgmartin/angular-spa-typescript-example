@@ -13,14 +13,14 @@
                 <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="vm.markAll(!allChecked)">
                 <label for="toggle-all">Mark all as complete</label>
                 <ul id="todo-list">
-                    <li ng-repeat="todo in todos track by $index" ng-class="{completed: todoModule.completed, editing: todo == editedTodo}">
+                    <li ng-repeat="todo in todos track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
                         <div class="view">
-                            <input class="toggle" type="checkbox" ng-model="todoModule.completed">
-                            <label ng-dblclick="vm.editTodo(todo)">{{todoModule.title}}</label>
+                            <input class="toggle" type="checkbox" ng-model="todo.completed">
+                            <label ng-dblclick="vm.editTodo(todo)">{{todo.title}}</label>
                             <button class="destroy" ng-click="vm.removeTodo(todo)"></button>
                         </div>
                         <form ng-submit="vm.doneEditing(todo)">
-                            <input class="edit" ng-model="todoModule.title" todo-blur="vm.doneEditing(todo)" todo-focus="todo == editedTodo">
+                            <input class="edit" ng-model="todo.title" todo-blur="vm.doneEditing(todo)" todo-focus="todo == editedTodo">
                         </form>
                     </li>
                 </ul>

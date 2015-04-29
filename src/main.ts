@@ -1,6 +1,6 @@
 // Bootstrap and run the application
-import AppModule = require('./appModule/AppModule');
-import TodoModule = require('./todoModule/TodoModule');
+import AppModule = require('./app/AppModule');
+import TodoModule = require('./todo/TodoModule');
 
 var todoModule = new TodoModule();
 var myApp = new AppModule([todoModule]);
