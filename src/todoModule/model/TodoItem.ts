@@ -1,6 +1,8 @@
-export class TodoItem {
+class TodoItem {
     constructor(
         public title: string,
         public completed: boolean
     ) { }
 }
+
+export = TodoItem;

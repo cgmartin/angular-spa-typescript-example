@@ -235,7 +235,7 @@ gulp.task('index-html', false, function() {
 gulp.task('partials', false, function() {
     var destDir  = 'dist/js';
     var destFile = 'partials.js';
-    return gulp.src('src/app/**/*.partial.html')
+    return gulp.src('src/**/*.partial.html')
         .pipe($.newer(destDir + '/' + destFile))
         .pipe(verbosePrintFiles('partials'))
         .pipe($.if(isProduction, $.htmlmin({
@@ -270,7 +270,7 @@ gulp.task('build', 'Builds the source files into a distributable package', funct
 });
 
 gulp.task('build-iterate', false, function(cb) {
-    runSequence(['vendor-js', 'app-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
+    runSequence('lint', ['vendor-js', 'app-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
 });
 
 gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['build-watch'], function() {
@@ -318,7 +318,7 @@ gulp.task('watch', 'Watch for file changes and re-run build and lint tasks', ['b
 
 // Don't run app-js during watch, handled by watchify
 gulp.task('build-watch', false, ['clean-build'], function(cb) {
-    runSequence(['vendor-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
+    runSequence('lint', ['vendor-js', 'index-html', 'partials', 'fonts', 'www-root', 'less'], cb);
 });
 
 /************************************************************************

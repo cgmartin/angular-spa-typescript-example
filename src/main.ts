@@ -1,4 +1,8 @@
 // Bootstrap and run the application
-import app = require('./app/app');
-var myApp = new app.App();
+import AppModule = require('./appModule/AppModule');
+import TodoModule = require('./todoModule/TodoModule');
+
+var todoModule = new TodoModule();
+var myApp = new AppModule([todoModule]);
+
 myApp.bootstrap(true);

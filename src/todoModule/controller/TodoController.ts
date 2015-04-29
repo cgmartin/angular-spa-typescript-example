@@ -1,18 +1,18 @@
 /// <reference path="../../../typings/angularjs/angular.d.ts"/>
 
-import models = require('./todo-models');
-import services = require('./todo-services');
+import ITodoStorage = require('../service/ITodoStorage');
+import TodoItem = require('../model/TodoItem');
 
-export class TodoController {
+class TodoController {
 
-    private todos: models.TodoItem[];
+    private todos: TodoItem[];
 
     // dependencies are injected via AngularJS $injector
     // controller's name is registered in Application.ts and specified from ng-controller attribute in index.html
     // @ngInject
     constructor(
         private $scope: ITodoScope,
-        private todoStorage: services.ITodoStorage,
+        private todoStorage: ITodoStorage,
         private filterFilter
     ) {
         this.todos = $scope.todos = todoStorage.get();
@@ -28,7 +28,6 @@ export class TodoController {
         // watching for events/changes in scope, which are caused by view/user input
         // if you subscribe to scope or event with lifetime longer than this controller, make sure you unsubscribe.
         $scope.$watch('todos', () => this.onTodos(), true);
-
     }
 
     onTodos() {
@@ -44,15 +43,15 @@ export class TodoController {
             return;
         }
 
-        this.todos.push(new models.TodoItem(newTodo, false));
+        this.todos.push(new TodoItem(newTodo, false));
         this.$scope.newTodo = '';
     }
 
-    editTodo(todoItem: models.TodoItem) {
+    editTodo(todoItem: TodoItem) {
         this.$scope.editedTodo = todoItem;
     }
 
-    doneEditing(todoItem: models.TodoItem) {
+    doneEditing(todoItem: TodoItem) {
         this.$scope.editedTodo = null;
         todoItem.title = todoItem.title.trim();
         if (!todoItem.title) {
@@ -60,7 +59,7 @@ export class TodoController {
         }
     }
 
-    removeTodo(todoItem: models.TodoItem) {
+    removeTodo(todoItem: TodoItem) {
         this.todos.splice(this.todos.indexOf(todoItem), 1);
     }
 
@@ -73,10 +72,10 @@ export class TodoController {
     }
 }
 
-export interface ITodoScope extends ng.IScope {
-    todos: models.TodoItem[];
+interface ITodoScope extends ng.IScope {
+    todos: TodoItem[];
     newTodo: string;
-    editedTodo: models.TodoItem;
+    editedTodo: TodoItem;
     remainingCount: number;
     doneCount: number;
     allChecked: boolean;
@@ -84,3 +83,5 @@ export interface ITodoScope extends ng.IScope {
     location: ng.ILocationService;
     vm: TodoController;
 }
+
+export = TodoController;

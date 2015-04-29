@@ -8,7 +8,7 @@ import sinon = require('sinon');
 import chai = require('chai');
 var expect = chai.expect;
 var inject = angular.mock.inject;
-import app = require('../../src/app/app');
+import AppModule = require('../../src/appModule/AppModule');
 
 describe('app module', () => {
     var appInstance;
@@ -16,7 +16,7 @@ describe('app module', () => {
     var bootConfigRequestHandler;
 
     beforeEach(() => {
-        appInstance = new app.App();
+        appInstance = new AppModule();
     });
 
     beforeEach(inject(($injector) => {
