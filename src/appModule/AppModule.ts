@@ -10,6 +10,10 @@ class AppModule implements IModule {
     private name: string;
     public module: ng.IModule;
 
+    /**
+     * @param modules Application modules to include as dependencies
+     * @param name (optional) Angular module name (default: 'app')
+     */
     constructor(modules?: Array<IModule>,
                 name?: string) {
 
@@ -46,12 +50,13 @@ class AppModule implements IModule {
      */
     public bootstrap(strictDi: boolean,
                      domElement?: Document,
-                     injector?: ng.auto.IInjectorService): angular.IHttpPromise<any> {
+                     injector?: ng.auto.IInjectorService): ng.IHttpPromise<any> {
 
         if (!injector) {
             injector = angular.injector(['ng']);
         }
 
+        // Load boot config file first before really bootstrapping
         var $http = injector.get('$http');
         return $http.get('/spa-boot.json')
             .then((response) => {
@@ -63,6 +68,11 @@ class AppModule implements IModule {
             });
     }
 
+    /**
+     * @param configData Boot config
+     * @param strictDi Strict di mode?
+     * @param domElement (optional) Element to bind the angular app to (default: document)
+     */
     private bootstrapApp(configData: IBootConfig,
                          strictDi: boolean,
                          domElement?: Document) {
@@ -71,7 +81,9 @@ class AppModule implements IModule {
             domElement = document;
         }
 
+        // Dynamically add the boot config as a constant
         this.module.constant('config', configData);
+
         angular.bootstrap(domElement, [this.name], {
             strictDi: strictDi
         });
