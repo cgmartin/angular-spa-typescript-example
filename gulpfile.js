@@ -97,7 +97,7 @@ function bundleTs() {
                 entry: true,
                 cache: {},
                 packageCache: {},
-                fullPaths: true,
+                fullPaths: false,
                 debug: true
             }).plugin(tsify, {target: 'ES5'})
         )
