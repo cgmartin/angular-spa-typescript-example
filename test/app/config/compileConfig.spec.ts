@@ -19,7 +19,7 @@ describe('app/config', () => {
 
         it('should configure compileProvider', () => {
             [{
-                bootConfig: {debugInfoEnabled: false},
+                bootConfig: {isDebugInfoEnabled: false},
                 expected: {debugInfoEnabledCalledWith: false}
             }, {
                 bootConfig: {}, // Test default condition

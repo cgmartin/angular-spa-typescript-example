@@ -1,4 +1,5 @@
 {
-  "debugInfoEnabled": true,
-  "apiBaseUrl": "/api-mocks/"
+  "isDebugInfoEnabled": true,
+  "apiBaseUrl": "/stubs/",
+  "isStubsEnabled": true
 }

@@ -3,8 +3,9 @@
  * @see App::bootstrapApp()
  */
 interface IBootConfig {
-    debugInfoEnabled?: boolean;
-    html5Mode?: boolean;
+    isDebugInfoEnabled?: boolean;
+    isHtml5ModeEnabled?: boolean;
+    isStubsEnabled?: boolean;
     apiBaseUrl?: string;
 }
 

@@ -7,7 +7,7 @@ function locationConfig(
     $locationProvider: angular.ILocationProvider, config: IBootConfig
 ) {
     $locationProvider.html5Mode(
-        (config.html5Mode !== undefined) ? config.html5Mode : false
+        (config.isHtml5ModeEnabled !== undefined) ? config.isHtml5ModeEnabled : false
     );
 }
 

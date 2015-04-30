@@ -26,8 +26,9 @@ describe('app module', () => {
         bootConfigRequestHandler = $httpBackend
             .when('GET', '/spa-boot.json')
             .respond({
-                debugInfoEnabled: true,
-                html5Mode: false,
+                isDbugInfoEnabled: true,
+                isHtml5ModeEnabled: false,
+                isStubsEnabled: false,
                 apiBaseUrl: '/api/'
             });
     }));

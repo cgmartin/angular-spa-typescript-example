@@ -9,7 +9,7 @@ function compileConfig(
     // Enable/disable debug data
     // https://docs.angularjs.org/guide/production
     $compileProvider.debugInfoEnabled(
-        (config.debugInfoEnabled !== undefined) ? config.debugInfoEnabled : true
+        (config.isDebugInfoEnabled !== undefined) ? config.isDebugInfoEnabled : true
     );
 }
 

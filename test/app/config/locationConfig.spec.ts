@@ -19,7 +19,7 @@ describe('app/config', () => {
 
         it('should configure locationProvider', () => {
             [{
-                bootConfig: {html5Mode: true},
+                bootConfig: {isHtml5ModeEnabled: true},
                 expected: {html5ModeCalledWith: true}
             }, {
                 bootConfig: {}, // Test default condition
