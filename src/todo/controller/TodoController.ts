@@ -2,6 +2,7 @@
 
 import ITodoStorage = require('../service/ITodoStorage');
 import TodoItem = require('../model/TodoItem');
+import TodoModalController = require('./TodoModalController');
 
 class TodoController {
 
@@ -13,12 +14,13 @@ class TodoController {
     constructor(
         private $scope: ITodoScope,
         private todoStorage: ITodoStorage,
-        private filterFilter
+        private filterFilter,
+        private $modal,
+        private $log
     ) {
         this.todos = $scope.todos = todoStorage.get();
 
-        $scope.newTodo = '';
-        $scope.editedTodo = null;
+        this.$scope.newTodo = { id: undefined, title: '', isComplete: false };
         $scope.statusFilter = null;
 
         // 'vm' stands for 'view model'. We're adding a reference to the controller to the scope
@@ -31,50 +33,80 @@ class TodoController {
     }
 
     onTodos() {
-        this.$scope.remainingCount = this.filterFilter(this.todos, { completed: false }).length;
+        this.$scope.remainingCount = this.filterFilter(this.todos, { isComplete: false }).length;
         this.$scope.doneCount = this.todos.length - this.$scope.remainingCount;
         this.$scope.allChecked = !this.$scope.remainingCount;
         this.todoStorage.put(this.todos);
     }
 
-    addTodo() {
-        var newTodo : string = this.$scope.newTodo.trim();
-        if (!newTodo.length) {
-            return;
-        }
-
-        this.todos.push(new TodoItem(newTodo, false));
-        this.$scope.newTodo = '';
-    }
-
-    editTodo(todoItem: TodoItem) {
-        this.$scope.editedTodo = todoItem;
-    }
-
-    doneEditing(todoItem: TodoItem) {
-        this.$scope.editedTodo = null;
-        todoItem.title = todoItem.title.trim();
-        if (!todoItem.title) {
-            this.removeTodo(todoItem);
-        }
+    openModal(todo: TodoItem) {
+        var modalInstance = this.$modal.open({
+            templateUrl: 'todo/partials/todoModalContent.partial.html',
+            controller: TodoModalController,
+            resolve: {
+                todo: () => {
+                    return angular.copy(todo);
+                }
+            }
+        });
+        modalInstance.result.then((result) => {
+            this.$log.debug(result);
+            var todo = result.todo;
+            if (result.action === 'delete') {
+                this.removeTodo(todo);
+            } else {
+                todo.title = todo.title.trim();
+                if (todo.id === undefined) {
+                    this.addTodo(todo);
+                } else {
+                    this.editTodo(todo);
+                }
+            }
+        }, () => {
+            this.$log.info('Modal dismissed at: ' + new Date());
+        });
     }
 
     removeTodo(todoItem: TodoItem) {
         this.todos.splice(this.todos.indexOf(todoItem), 1);
     }
 
-    clearDoneTodos() {
-        this.$scope.todos = this.todos = this.todos.filter(todoItem => !todoItem.completed);
+    addTodo(todoItem: TodoItem) {
+        if (!todoItem.title.length) {
+            return;
+        }
+
+        todoItem.id = new Date().getTime();
+        this.todos.push(todoItem);
     }
 
-    markAll(completed: boolean) {
-        this.todos.forEach(todoItem => { todoItem.completed = completed; });
+    editTodo(todo: TodoItem) {
+        var oldTodo = this.todos.filter(
+            (i: TodoItem) => { return i.id === todo.id; }
+        )[0];
+        oldTodo.title = todo.title;
+    }
+
+    toggleCompleted(todoItem: TodoItem) {
+        todoItem.isComplete = !todoItem.isComplete;
+    }
+
+    markAllCompleted(completed?: boolean) {
+        if (completed === undefined) {
+            completed = true;
+        }
+        this.todos.forEach(todoItem => { todoItem.isComplete = completed; });
+    }
+
+    clearCompleted() {
+        this.$scope.todos = this.todos =
+            this.todos.filter(todoItem => !todoItem.isComplete);
     }
 }
 
 interface ITodoScope extends ng.IScope {
     todos: TodoItem[];
-    newTodo: string;
+    newTodo: TodoItem;
     editedTodo: TodoItem;
     remainingCount: number;
     doneCount: number;

@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title"><span ng-show="todo.id">Edit</span><span ng-hide="todo.id">New</span> Todo
+    </h3>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="todoTitle">Title</label>
+            <input type="text" id="todoTitle" placeholder="My todo item..." ng-model="todo.title" class="form-control"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="vm.cancel()" type="button" class="btn btn-default">Cancel</button>
+        <button ng-click="vm.ok('delete')" type="button" ng-show="todo.id" class="btn btn-danger">Delete</button>
+        <button ng-click="vm.ok('save')" type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

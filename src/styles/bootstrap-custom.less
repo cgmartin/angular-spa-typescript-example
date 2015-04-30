@@ -1,4 +1,5 @@
 @import "bootstrap-variables.less";
+@import "buttons.less";
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
@@ -13,4 +14,13 @@ h3, .h3 {
 .login-oauth-group a {
   padding-right: 30px;
   padding-left: 30px;
+}
+
+.strikethru {
+  text-decoration: line-through;
+}
+
+[ng-click], [data-ng-click], [x-ng-click] {
+  cursor: pointer;
+  .user-select(none);
 }

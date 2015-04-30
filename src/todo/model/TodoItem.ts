@@ -1,7 +1,9 @@
 class TodoItem {
+    public id: number;
+
     constructor(
         public title: string,
-        public completed: boolean
+        public isComplete: boolean
     ) { }
 }
 

@@ -3,34 +3,42 @@
         <div class="jumbotron text-center">
             <h1>TODOs</h1>
         </div>
-        <section id="todoapp">
-            <header id="header">
-                <form id="todo-form" ng-submit="vm.addTodo()">
-                    <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
-                </form>
-            </header>
-            <section id="main" ng-show="todos.length" ng-cloak>
-                <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="vm.markAll(!allChecked)">
-                <label for="toggle-all">Mark all as complete</label>
-                <ul id="todo-list">
-                    <li ng-repeat="todo in todos track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
-                        <div class="view">
-                            <input class="toggle" type="checkbox" ng-model="todo.completed">
-                            <label ng-dblclick="vm.editTodo(todo)">{{todo.title}}</label>
-                            <button class="destroy" ng-click="vm.removeTodo(todo)"></button>
-                        </div>
-                        <form ng-submit="vm.doneEditing(todo)">
-                            <input class="edit" ng-model="todo.title" todo-blur="vm.doneEditing(todo)" todo-focus="todo == editedTodo">
-                        </form>
-                    </li>
-                </ul>
-            </section>
-            <footer id="footer" ng-show="todos.length" ng-cloak>
-				<span id="todo-count"><strong>{{remainingCount}}</strong>
-					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-				</span>
-                <button id="clear-completed" ng-click="vm.clearDoneTodos()" ng-show="doneCount">Clear completed</button>
-            </footer>
-        </section>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix"><a ng-click="vm.openModal(newTodo)" class="pull-right"
+                    ><i class="fa fa-plus"></i></a>
+                <h1 class="panel-title">Todo List</h1>
+            </div>
+
+            <ul class="list-group">
+                <li ng-repeat="todo in todos track by $index" class="list-group-item"
+                        ><a ng-click="vm.openModal(todo)" class="pull-right"><i class="fa fa-edit"></i></a
+                        ><a ng-click="vm.toggleCompleted(todo)"><i ng-class="{
+                                                                fa: true, 'fa-lg': true,
+                                                                'fa-check-circle-o': todo.isComplete,
+                                                                'fa-circle-o': !todo.isComplete }"></i></a>
+                        <span ng-class="{ strikethru: todo.isComplete }">{{todo.title}}</span>
+                </li>
+            </ul>
+
+            <div class="panel-footer clearfix"><span class="pull-left"><strong>{{remainingCount}} </strong>
+                <ng-pluralize count="remainingCount" when="{
+                        one: 'item left', other: 'items left'
+                    }"></ng-pluralize></span>
+
+                <button ng-click="vm.clearCompleted()" ng-show="remainingCount < todos.length"
+                        class="btn btn-default btn-xs pull-right"
+                        >Clear completed ({{todos.length - remainingCount}})</button>
+
+                <button ng-click="vm.markAllCompleted()" ng-show="remainingCount > 0"
+                        class="btn btn-default btn-xs pull-right"
+                        >Mark all completed</button>
+            </div>
+        </div>
+    </div>
+</div>
+

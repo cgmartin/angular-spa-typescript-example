@@ -2,6 +2,7 @@
 
 import routerConfig = require('./config/routerConfig');
 import TodoController = require('./controller/TodoController');
+import TodoModalController = require('./controller/TodoModalController');
 import todoBlurDirective = require('./directive/todoBlurDirective');
 import todoFocusDirective = require('./directive/todoFocusDirective');
 import TodoStorage = require('./service/TodoStorage');
@@ -23,7 +24,8 @@ class TodoModule implements IModule {
 
         var dependencies: Array<string> = [
             'app.templates',
-            'ui.router'
+            'ui.router',
+            'ui.bootstrap'
         ].concat(
             modules.map((m) => m.getName())
         );
@@ -33,6 +35,7 @@ class TodoModule implements IModule {
             .module(name, dependencies)
             .config(routerConfig)
             .controller('todoController', TodoController)
+            .controller('todoModalController', TodoModalController)
             .directive('todoBlur', todoBlurDirective)
             .directive('todoFocus', todoFocusDirective)
             .service('todoStorage', TodoStorage);
