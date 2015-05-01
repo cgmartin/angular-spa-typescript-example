@@ -175,7 +175,7 @@ gulp.task('less', false, function() {
 
     return gulp
         // Use all less files as newer source
-        .src(['src/styles/**/*.less', 'bower_components/angular/angular-csp.css'], {base: '.'})
+        .src(['src/**/*.less', 'bower_components/angular/angular-csp.css'], {base: '.'})
         .pipe($.newer(destDir + '/' + destFile))
         // Only process the main less file(s), with their individual search paths
         .pipe($.filter(_.pluck(mainCssFiles, 'main')))

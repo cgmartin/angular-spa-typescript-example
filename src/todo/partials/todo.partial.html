@@ -9,21 +9,41 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <a ng-click="vm.openModal(newTodo)" class="pull-right"><i class="fa fa-plus"></i></a>
-                <h1 class="panel-title">Todo List</h1>
-            </div>
+        <div class="todo-panel panel panel-default">
+
+            <form role="form" ng-submit="vm.addNewTodo()">
+                <input type="text" id="newTodoTitle"
+                       placeholder="What needs to be done?"
+                       ng-model="newTodoTitle" class="form-control" autofocus/>
+            </form>
 
             <ul class="list-group">
-                <li ng-repeat="todo in todos track by $index" class="list-group-item">
-                    <a ng-click="vm.openModal(todo)" class="pull-right"><i class="fa fa-edit"></i></a>
-                    <a ng-click="vm.toggleCompleted(todo)">
-                        <i ng-class="{
-                            fa: true, 'fa-lg': true,
-                            'fa-check-circle-o': todo.isComplete,
-                            'fa-circle-o': !todo.isComplete }"></i></a>
-                    <span ng-class="{ strikethru: todo.isComplete }">{{todo.title}}</span>
+                <li ng-repeat="todo in todos track by $index"
+                    ng-class="{
+                        'list-group-item': true,
+                        completed: todo.isComplete,
+                        editing: todo == editTodo
+                        }">
+                    <div class="view">
+                        <a ng-click="vm.removeTodo(todo)" class="pull-right">
+                            <i class="fa fa-times"></i></a>
+                        <a ng-click="vm.toggleCompleted(todo)">
+                            <i ng-class="{
+                                fa: true, 'fa-lg': true,
+                                'fa-check-circle-o': todo.isComplete,
+                                'fa-circle-o': !todo.isComplete }"></i></a>
+                        <span ng-class="{ strikethru: todo.isComplete }"
+                              ng-dblclick="vm.beginEditTodo(todo)">
+                            {{todo.title}}</span>
+                    </div>
+
+                    <form ng-submit="vm.endEditTodo(todo)" role="form">
+                        <input type="text" id="editTodoTitle"
+                               ng-model="todo.title" class="form-control"
+                               todo-blur="vm.endEditTodo(todo)"
+                               todo-focus="todo == editTodo" />
+                    </form>
+
                 </li>
             </ul>
 

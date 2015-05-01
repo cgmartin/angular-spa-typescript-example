@@ -2,7 +2,6 @@
 
 import ITodoStorage = require('../service/ITodoStorage');
 import TodoItem = require('../model/TodoItem');
-import TodoModalController = require('./TodoModalController');
 
 class TodoController {
 
@@ -15,12 +14,12 @@ class TodoController {
         private $scope: ITodoScope,
         private todoStorage: ITodoStorage,
         private filterFilter,
-        private $modal,
         private $log
     ) {
         this.todos = $scope.todos = todoStorage.get();
 
-        this.$scope.newTodo = { id: undefined, title: '', isComplete: false };
+        $scope.newTodoTitle = '';
+        $scope.editTodo = null;
         $scope.statusFilter = null;
 
         // 'vm' stands for 'view model'. We're adding a reference to the controller to the scope
@@ -39,52 +38,38 @@ class TodoController {
         this.todoStorage.put(this.todos);
     }
 
-    openModal(todo: TodoItem) {
-        var modalInstance = this.$modal.open({
-            templateUrl: 'todo/partials/todoModalContent.partial.html',
-            controller: TodoModalController,
-            resolve: {
-                todo: () => {
-                    return angular.copy(todo);
-                }
-            }
-        });
-        modalInstance.result.then((result) => {
-            this.$log.debug(result);
-            var todo = result.todo;
-            if (result.action === 'delete') {
-                this.removeTodo(todo);
-            } else {
-                todo.title = todo.title.trim();
-                if (todo.id === undefined) {
-                    this.addTodo(todo);
-                } else {
-                    this.editTodo(todo);
-                }
-            }
-        }, () => {
-            this.$log.info('Modal dismissed at: ' + new Date());
-        });
+    addNewTodo() {
+        var newTodoTitle: string = this.$scope.newTodoTitle.trim();
+        if (!newTodoTitle.length) {
+            return;
+        }
+        this.todos.push(new TodoItem(newTodoTitle, false));
+        this.$scope.newTodoTitle = '';
     }
 
-    removeTodo(todoItem: TodoItem) {
-        this.todos.splice(this.todos.indexOf(todoItem), 1);
+    removeTodo(todo: TodoItem) {
+        this.todos.splice(this.todos.indexOf(todo), 1);
     }
 
-    addTodo(todoItem: TodoItem) {
-        if (!todoItem.title.length) {
+    addTodo(todo: TodoItem) {
+        if (!todo.title.length) {
             return;
         }
 
-        todoItem.id = new Date().getTime();
-        this.todos.push(todoItem);
+        todo.id = new Date().getTime();
+        this.todos.push(todo);
     }
 
-    editTodo(todo: TodoItem) {
-        var oldTodo = this.todos.filter(
-            (i: TodoItem) => { return i.id === todo.id; }
-        )[0];
-        oldTodo.title = todo.title;
+    beginEditTodo(todo: TodoItem) {
+        this.$scope.editTodo = todo;
+    }
+
+    endEditTodo(todo: TodoItem) {
+        this.$scope.editTodo = null;
+        todo.title = todo.title.trim();
+        if (!todo.title) {
+            this.removeTodo(todo);
+        }
     }
 
     toggleCompleted(todoItem: TodoItem) {
@@ -106,8 +91,8 @@ class TodoController {
 
 interface ITodoScope extends ng.IScope {
     todos: TodoItem[];
-    newTodo: TodoItem;
-    editedTodo: TodoItem;
+    newTodoTitle: string;
+    editTodo: TodoItem;
     remainingCount: number;
     doneCount: number;
     allChecked: boolean;
