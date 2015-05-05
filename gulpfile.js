@@ -110,9 +110,8 @@ function bundleTs() {
 //
 // gulp-typescript example
 //
-// For server-side Node.js TypeScript development, gulp-typescript
-// might work out better than browserify. For client-side development,
-// it was too much of a fight...
+// More straightforward to wire up to grunt than browserify,
+// but much slower...
 
 //var tsProject = $.typescript.createProject({
 //    declarationFiles: false,
@@ -120,8 +119,8 @@ function bundleTs() {
 //    sortOutput: true,
 //    target: 'ES5',
 //    // module: null,       // Client-side Internal module references
-//    // module: 'amd',      // Client-side RequireJS
-//    // module: 'commonjs', // Server-side Node
+//    // module: 'amd',
+//    // module: 'commonjs',
 //    sourceRoot: '../../src'
 //});
 //
@@ -160,7 +159,7 @@ var mainCssFiles = [{
     main: 'bower_components/angular/angular-csp.css'
 }];
 
-// Too buggy with bootstrap
+// Too buggy to use with bootstrap
 //gulp.task('lint-less', function() {
 //    return gulp.src('src/styles/**/*.less')
 //        .pipe($.plumber({errorHandler: onError}))
@@ -175,7 +174,7 @@ gulp.task('less', false, function() {
 
     return gulp
         // Use all less files as newer source
-        .src(['src/**/*.less', 'bower_components/angular/angular-csp.css'], {base: '.'})
+        .src(['src/**/*.less'].concat(_.pluck(mainCssFiles, 'main')), {base: '.'})
         .pipe($.newer(destDir + '/' + destFile))
         // Only process the main less file(s), with their individual search paths
         .pipe($.filter(_.pluck(mainCssFiles, 'main')))
