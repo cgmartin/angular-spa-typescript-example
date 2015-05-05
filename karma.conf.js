@@ -50,9 +50,10 @@ module.exports = function karmaConfig(config) {
             plugin: [[tsify, {target: 'ES5'}]]
         },
 
-        // For server-side Node.js TypeScript development, this preprocessor
-        // might work out better than browserify. For client-side development,
-        // it was too much of a fight...
+        // This typescriptPreprocessor was slower to compile than browserify,
+        // and had a nasty side effect of rendering js files in the same
+        // directories as the ts files, confusing watch processes...
+        //
         //typescriptPreprocessor: {
         //    // options passed to the typescript compiler
         //    options: {

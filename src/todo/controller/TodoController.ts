@@ -1,5 +1,6 @@
 /// <reference path="../../../typings/angularjs/angular.d.ts"/>
 
+import ITodoScope = require('./ITodoScope');
 import ITodoStorage = require('../service/ITodoStorage');
 import TodoItem = require('../model/TodoItem');
 
@@ -87,18 +88,6 @@ class TodoController {
         this.$scope.todos = this.todos =
             this.todos.filter(todoItem => !todoItem.isComplete);
     }
-}
-
-interface ITodoScope extends ng.IScope {
-    todos: TodoItem[];
-    newTodoTitle: string;
-    editTodo: TodoItem;
-    remainingCount: number;
-    doneCount: number;
-    allChecked: boolean;
-    statusFilter: { completed: boolean; };
-    location: ng.ILocationService;
-    vm: TodoController;
 }
 
 export = TodoController;
