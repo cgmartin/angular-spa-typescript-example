@@ -1,5 +1,6 @@
 # angular-spa-typescript-example
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 [![Build Status](https://travis-ci.org/cgmartin/angular-spa-typescript-example.svg?branch=master)](https://travis-ci.org/cgmartin/angular-spa-typescript-example)
 [![Dependency Status](https://david-dm.org/cgmartin/angular-spa-typescript-example.svg)](https://david-dm.org/cgmartin/angular-spa-typescript-example)
 [![devDependency Status](https://david-dm.org/cgmartin/angular-spa-typescript-example/dev-status.svg)](https://david-dm.org/cgmartin/angular-spa-typescript-example#info=devDependencies)
